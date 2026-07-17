@@ -1,0 +1,54 @@
+// @ts-check
+
+const courseDays = [
+  'course/day-01-landscape',
+  'course/day-02-prompt-context',
+  'course/day-03-ai-coding',
+  'course/day-04-model-api',
+  'course/day-05-tools-mcp',
+  'course/day-06-rag',
+  'course/day-07-multimodal',
+  'course/day-08-automation',
+  'course/day-09-agents',
+  'course/day-10-team-workflows',
+  'course/day-11-ai-ux',
+  'course/day-12-production-quality',
+  'course/day-13-integration',
+  'course/day-14-release',
+];
+
+const sidebars = {
+  courseSidebar: [
+    'intro',
+    'roadmap',
+    {
+      type: 'category',
+      label: '14 天课程',
+      collapsible: true,
+      collapsed: false,
+      items: courseDays,
+    },
+    {
+      type: 'category',
+      label: '项目实践',
+      items: ['project/project-brief'],
+    },
+    {
+      type: 'category',
+      label: '学习资料',
+      items: ['reference/resources'],
+    },
+    {
+      type: 'category',
+      label: '执行模板',
+      items: [
+        'templates/technology-map',
+        'templates/decision-matrix',
+        'templates/daily-retro',
+        'templates/eval-set',
+      ],
+    },
+  ],
+};
+
+module.exports = sidebars;
