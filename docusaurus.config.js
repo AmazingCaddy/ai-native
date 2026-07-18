@@ -1,5 +1,30 @@
 // @ts-check
 
+const hiddenSidebarDocIds = new Set([
+  'learning/README',
+  'review/README',
+  'discussions/guide',
+  'discussions/thread-template',
+]);
+
+/**
+ * @param {import('@docusaurus/plugin-content-docs/lib/sidebars/types').NormalizedSidebar} items
+ * @returns {import('@docusaurus/plugin-content-docs/lib/sidebars/types').NormalizedSidebar}
+ */
+function filterSidebarItems(items) {
+  return items.flatMap((item) => {
+    if (item.type === 'doc' && hiddenSidebarDocIds.has(item.id)) {
+      return [];
+    }
+
+    if (item.type === 'category') {
+      return [{ ...item, items: filterSidebarItems(item.items) }];
+    }
+
+    return [item];
+  });
+}
+
 const config = {
   title: 'AI Native',
   tagline: '面向软件工程师的 AI 应用学习与实践路径',
@@ -34,6 +59,10 @@ const config = {
           routeBasePath: '/',
           sidebarPath: './sidebars.js',
           editUrl: 'https://github.com/AmazingCaddy/ai-native/edit/main/',
+          async sidebarItemsGenerator({ defaultSidebarItemsGenerator, ...args }) {
+            const items = await defaultSidebarItemsGenerator(args);
+            return filterSidebarItems(items);
+          },
         },
         blog: false,
         theme: {
