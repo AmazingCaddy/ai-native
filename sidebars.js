@@ -51,7 +51,7 @@ const sidebars = {
     {
       type: 'category',
       label: '项目实践',
-      items: ['project/project-brief'],
+      items: ['project/project-brief', 'project/decision-matrix'],
     },
     {
       type: 'category',

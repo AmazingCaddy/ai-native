@@ -310,9 +310,24 @@ flowchart LR
 
 单次运行不能代表整体效果：样本可能不具代表性，输出存在随机波动，服务也可能发生暂时性错误。应覆盖多种真实样本，对重要样本适当重复，并比较均值、波动和分类失败案例。
 
+简单样本还会产生**天花板效应**：多个强模型都接近满分，实验看不出能力差异。增加文本长度本身不等于提高区分度；更有效的方法是加入代表性的边界与失败样本，例如冲突信息、后续修正、缺失字段、无答案问题、强干扰内容、严格格式约束和隐蔽代码缺陷。
+
+小型评测可以作为烟雾实验，用于验证调用链、结果记录、格式遵循、延迟和 Token 统计，但不能据此宣布某个模型更强。真实选型需要覆盖业务分布、多个难度等级和足够数量的样本。
+
 统一条件的实验衡量模型在同一设置下的差异；如果还想比较各模型的最佳能力，可以增加“分别优化 Prompt 和参数”的实验，但必须与统一条件结果分开报告。
 
 **一句话记忆：** 固定任务、数据和条件，只改变模型；同时测质量、速度、成本和波动。
+
+#### Day 1 烟雾实验结果
+
+2026-07-18，在相同 Codex Agent 外壳和 Floway Provider 下，对 `gpt-5.6-sol` 与 `claude-opus-4-7` 执行四类任务、每类两次，共 16 次调用，全部成功。
+
+| 模型 | 满足全部显式标准 | 平均延迟 | 平均输出 Token | 主要观察 |
+| --- | ---: | ---: | ---: | --- |
+| `gpt-5.6-sol` | 8/8 | 9435 ms | 123 | 输出简洁，裸 JSON 和字数限制均稳定遵守 |
+| `claude-opus-4-7` | 4/8 | 10882 ms | 354 | 内容较详细；行动项过度提取、JSON 围栏和超字数问题在两次重复中稳定出现 |
+
+本结果只支持“GPT 在当前样本的格式遵循、简洁性和平均延迟上更好”，不支持一般能力排名。不同模型的 Tokenizer 和 Agent 上下文可能不同，Token 数也不能直接换算为跨模型成本。完整证据见[实验报告](../learning/day-01-model-comparison-report.md)。
 
 ### 10. Day 1 如何启动主线项目？
 
@@ -361,6 +376,74 @@ npm install --save-dev typescript --workspace @ai-native/assistant
 
 根目录的 `assistant:*` 脚本会把命令转发给应用工作区，因此通常不需要 `cd apps/assistant`。
 
+### 实践速查：Copilot CLI 的 `-p`
+
+`copilot -p "..."` 等价于 `copilot --prompt "..."`：在非交互模式执行一条 Prompt，完成后退出，适合脚本或一次性查询。
+
+```bash
+copilot -p "解释 package.json 中的 workspaces"
+```
+
+| 命令 | 行为 |
+| --- | --- |
+| `copilot` | 启动持续对话的交互会话 |
+| `copilot -i "..."` | 启动交互会话，并先执行初始 Prompt |
+| `copilot -p "..."` | 非交互执行一次 Prompt，然后退出 |
+
+`-p` 不代表提权。Copilot 的 `--allow-tool` 管理其内部工具权限；Codex 的沙箱授权控制 CLI 进程能否访问网络、Keychain 或受限资源。
+
+#### Codex 的 Web Search 与命令网络访问
+
+Codex 本身支持 Web Search，且它与 shell 进程的网络访问是两个独立能力：
+
+| 能力 | 用途 | 权限或配置 |
+| --- | --- | --- |
+| Codex Web Search | 从搜索缓存、索引或实时网页获取信息 | `web_search` 可设为 cached、indexed、live 或 disabled |
+| shell 网络访问 | 让 `curl`、npm、Copilot CLI 等子进程联网 | 沙箱网络设置或一次性授权 |
+| Browser | 打开并交互网页，适合本地 UI 测试或可视操作 | Browser 插件及站点权限 |
+
+`codex --search` 等价于将 Web Search 切换到 live 模式。某个会话的搜索网关未配置，并不代表 Codex 产品没有搜索能力；应区分产品能力、会话工具配置和 shell 沙箱权限。
+
+官方依据：[Agent approvals & security：Web search mode](https://learn.chatgpt.com/docs/agent-approvals-security#web-search-mode)。
+
+### 实践速查：Codex 如何发现和禁用 Skill？
+
+一个 Skill 是包含 `SKILL.md` 的目录，可选包含 `scripts/`、`references/`、`assets/` 和 `agents/openai.yaml`。Codex 使用渐进披露：启动时只加载技能的名称、描述和路径，匹配任务后才读取完整 `SKILL.md`。
+
+官方技能位置：
+
+| 范围 | 位置 |
+| --- | --- |
+| 仓库或当前目录 | 从当前目录向仓库根目录扫描 `.agents/skills/` |
+| 用户全局 | `~/.agents/skills/` |
+| 管理员 | `/etc/codex/skills/` |
+| 系统 | Codex 随附的系统技能 |
+
+Codex支持符号链接：扫描到链接目录时会读取链接目标中的 `SKILL.md`。本机 `~/.codex/skills/` 中的大部分条目就是指向 `mai-agents` 源码目录的链接，因此修改源文件会直接改变技能内容。
+
+禁用 Skill 时优先保留文件并在 `~/.codex/config.toml` 配置：
+
+```toml
+[[skills.config]]
+path = "/absolute/path/to/skill/SKILL.md"
+enabled = false
+```
+
+配置变更后需要重启 Codex。若两个技能使用相同 `name`，Codex不会合并它们，可能同时出现在技能选择器中。
+
+官方依据：[Build skills](https://learn.chatgpt.com/docs/build-skills)。
+
+### 实践速查：Copilot CLI 的网页工具
+
+| 工具 | 作用 | 当前依据 |
+| --- | --- | --- |
+| `web_fetch` | 读取一个已知 URL 的网页内容 | GitHub 官方 CLI 配置文档明确记录 |
+| `web_search` | 根据查询搜索网页 | 当前安装的 Copilot CLI 1.0.72 通过内置 GitHub MCP 暴露 |
+
+Copilot CLI 面向所有 GitHub Copilot 计划，但组织订阅需要管理员启用 CLI 策略。Web Search 没有在官方计划表中单列为独立权益，所以仍需考虑 CLI 版本、组织/MCP 策略和 AI Credits。
+
+核验日期：2026-07-18。官方依据：[About Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli)、[Configure Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli)。
+
 ### 实践概念：什么是技术地图？
 
 技术地图不是术语清单，而是由概念节点和有含义的连接组成的认知模型：
@@ -369,22 +452,73 @@ npm install --save-dev typescript --workspace @ai-native/assistant
 - 连线说明“依赖、限制、提供、测量或替代”等关系。
 - 节点记录还应包含适用场景、失败模式和项目证据。
 
+技术地图没有唯一外观。流程图强调执行顺序，思维导图强调分类；用于建立 AI Native 技术全景时，优先使用分层依赖图：方框表示概念，带文字的箭头表示关系，分组框表示模型层、应用层和工程层。
+
 ```mermaid
-flowchart LR
-    TOKEN[Token] -->|占用容量| WINDOW[Context Window]
-    PROMPT[Prompt] -->|提供指令| CONTEXT[Context]
-    RAG[RAG] -->|补充外部知识| CONTEXT
-    EMB[Embedding] -->|支持向量检索| RAG
-    RERANK[Reranker] -->|重新排序候选| RAG
-    CONTEXT -->|推理时输入| MODEL[Foundation Model]
-    MODEL -->|运行| INFER[Inference]
-    MODEL -->|提出调用请求| TOOL[Tool Calling]
-    WORKFLOW[Workflow] -->|编排固定步骤| TOOL
-    AGENT[Agent] -->|动态选择步骤| TOOL
-    EVAL[Eval] -->|测量质量| INFER
+flowchart TB
+    subgraph ENGINEERING["工程层"]
+        EVAL["Eval"]
+    end
+
+    subgraph APPLICATION["应用层"]
+        PROMPT["Prompt"]
+        RAG["RAG"]
+        TOOL["Tool Calling"]
+        WORKFLOW["Workflow"]
+        AGENT["Agent"]
+    end
+
+    subgraph MODEL["模型层"]
+        FM["Foundation Model"]
+        INFER["Inference"]
+        TOKEN["Token"]
+        WINDOW["Context Window"]
+        EMB["Embedding"]
+        RERANK["Reranker"]
+    end
+
+    FM -->|通过推理运行| INFER
+    TOKEN -->|占用容量| WINDOW
+    WINDOW -->|限制输入输出| INFER
+    PROMPT -->|提供指令| INFER
+    EMB -->|支持语义召回| RAG
+    RERANK -->|精排候选| RAG
+    RAG -->|提供外部知识| INFER
+    INFER -->|提出调用请求| TOOL
+    TOOL -->|返回外部结果| INFER
+    WORKFLOW -->|按固定步骤编排| TOOL
+    AGENT -->|动态选择| TOOL
+    EVAL -->|评测生成质量| INFER
+    EVAL -->|评测检索质量| RAG
 ```
 
 Day 1 的目标不是画得漂亮，而是能借助地图解释各技术如何协作，以及什么时候不应该使用它们。
+
+Eval 横跨整条技术链路，不只对单次 Query 的最终答案打分：它可以离线运行固定评测集，也可以在线记录用户反馈，并分别测量召回、排序、生成、引用、工具调用、延迟、Token 与成本。
+
+### 文档问答中的离线建库与在线检索
+
+```mermaid
+flowchart LR
+    subgraph OFFLINE["离线建库"]
+        DOC["文档"] --> CHUNK["解析与切块"]
+        CHUNK --> DOCEMB["Embedding"]
+        DOCEMB --> INDEX["向量索引"]
+    end
+    subgraph ONLINE["在线问答"]
+        QUERY["Query"] --> QEMB["Embedding"]
+        QEMB --> RETRIEVE["Top-N 粗召回"]
+        INDEX --> RETRIEVE
+        QUERY --> RERANK["Reranker 精排"]
+        RETRIEVE --> RERANK
+        RERANK --> TOPK["Top-K 文本块"]
+        TOPK --> LLM["LLM 生成答案"]
+    end
+```
+
+RAG 是“检索增强生成”的整体模式，而不只是向量数据库查询。其核心在线流程包括检索（Retrieval）、把检索结果加入模型上下文（Augmentation）和生成答案（Generation）；完整的 RAG 系统通常还包含文档解析、切块、Embedding、索引构建和增量更新等离线准备环节。
+
+Embedding 支持语义召回，Reranker 对召回候选重新排序，最终文本块与来源信息被组装进上下文供 LLM 生成答案。初次召回也可以采用关键词或混合检索；Top-N、Top-K、切块策略和是否使用 Reranker 都应通过评测确定。
 
 ## 常见误区
 

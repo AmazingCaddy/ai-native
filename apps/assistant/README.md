@@ -11,7 +11,7 @@
 
 ## 明确不做
 
-- 不调用模型 API
+- 主线 Fastify 服务运行时不调用模型 API；模型对比实验作为独立工具显式执行
 - 不实现文档索引或 RAG
 - 不执行真实任务系统写操作
 - 不实现 Agent 或复杂界面
@@ -40,6 +40,24 @@ npm run assistant:test
 npm run assistant:build
 npm run assistant:start
 ```
+
+## Day 1 模型能力对比实验
+
+先执行 dry run，确认模型、任务和调用次数；该命令不会调用模型：
+
+```bash
+npm run assistant:experiment:model-comparison
+```
+
+确认会消耗 GitHub Copilot AI Credits 后，再显式执行：
+
+```bash
+npm run assistant:experiment:model-comparison -- --execute
+```
+
+实验固定比较 `gpt-5.6-sol` 与 `claude-opus-4-7`，包含四类任务，每类重复两次。运行器通过 Codex CLI 复用 Floway 认证，逐条把原始结果写入 `eval/model-comparison/results/*.jsonl`，并生成待人工评分的 Markdown 报告。它比较的是模型在相同 Codex Agent 外壳中的表现，不代表裸模型 API 基准。
+
+若 `codex` 不在 `PATH`，通过 `CODEX_BIN` 指定可执行文件路径。不要把令牌或订阅凭据写入仓库。
 
 ## 数据说明
 
