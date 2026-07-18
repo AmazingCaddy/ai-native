@@ -2,11 +2,19 @@
   "name": "ai-native",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
-    "clear": "docusaurus clear"
+    "clear": "docusaurus clear",
+    "assistant:dev": "npm run dev --workspace @ai-native/assistant",
+    "assistant:build": "npm run build --workspace @ai-native/assistant",
+    "assistant:start": "npm run start --workspace @ai-native/assistant",
+    "assistant:test": "npm run test --workspace @ai-native/assistant",
+    "assistant:typecheck": "npm run typecheck --workspace @ai-native/assistant"
   },
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
@@ -20,6 +28,6 @@
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=20.0"
+    "node": ">=24.0"
   }
 }

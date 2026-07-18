@@ -1,0 +1,72 @@
+[
+  {
+    "id": "Q001",
+    "question": "一天以内的年假由谁审批？",
+    "answerable": true,
+    "expectedSource": "leave-policy.md",
+    "expectedAnswer": "直属负责人"
+  },
+  {
+    "id": "Q002",
+    "question": "未使用年假最多可以结转多少天？",
+    "answerable": true,
+    "expectedSource": "leave-policy.md",
+    "expectedAnswer": "最多 5 天"
+  },
+  {
+    "id": "Q003",
+    "question": "Atlas 项目通常在哪些时间发布？",
+    "answerable": true,
+    "expectedSource": "release-process.md",
+    "expectedAnswer": "每周二和周四 15:00–17:00"
+  },
+  {
+    "id": "Q004",
+    "question": "P0 事故要求多久内响应？",
+    "answerable": true,
+    "expectedSource": "incident-response.md",
+    "expectedAnswer": "5 分钟内"
+  },
+  {
+    "id": "Q005",
+    "question": "事故恢复后多久需要完成复盘？",
+    "answerable": true,
+    "expectedSource": "incident-response.md",
+    "expectedAnswer": "两个工作日内"
+  },
+  {
+    "id": "Q006",
+    "question": "Atlas 当前里程碑日期是什么？",
+    "answerable": true,
+    "expectedSource": "project-atlas.md",
+    "expectedAnswer": "2026 年 8 月 15 日"
+  },
+  {
+    "id": "Q007",
+    "question": "新员工何时可以申请生产环境只读权限？",
+    "answerable": true,
+    "expectedSource": "onboarding-guide.md",
+    "expectedAnswer": "完成安全培训后"
+  },
+  {
+    "id": "Q008",
+    "question": "公司的远程办公补贴是多少？",
+    "answerable": false,
+    "expectedSource": null,
+    "expectedAnswer": "资料中没有答案，应拒绝猜测"
+  },
+  {
+    "id": "Q009",
+    "question": "Atlas 项目的年度预算是多少？",
+    "answerable": false,
+    "expectedSource": null,
+    "expectedAnswer": "资料中没有答案，应拒绝猜测"
+  },
+  {
+    "id": "Q010",
+    "question": "公司报销出租车的最高金额是多少？",
+    "answerable": false,
+    "expectedSource": null,
+    "expectedAnswer": "资料中没有答案，应拒绝猜测"
+  }
+]

@@ -24,11 +24,16 @@ npm run build
 
 ## 内容结构
 
+- `apps/assistant/`：14 天持续开发的团队知识与任务助手
+- `docs/methodology/`：可跨学习方向复用的[学习系统方法](./docs/methodology/learning-system.md)
 - `docs/course/`：14 天每日课程
+- `docs/learning/`：每天的原始问答、纠错过程和掌握状态
+- `docs/discussions/`：跨主题追问、讨论队列和独立讨论线程
+- `docs/review/`：每天整理后的图表、精选问答和复习材料
 - `docs/project/`：主线项目说明
 - `docs/reference/`：资料索引
 - `docs/templates/`：技术地图、判断矩阵、复盘和评测模板
-- `planning/`：不发布到网站的内部计划
+- `planning/`：不发布到网站的内部计划，包括[双轨学习材料设计](./planning/2026-07-18-dual-track-learning-material-design.md)和[四层回溯系统设计](./planning/2026-07-18-four-layer-discussion-system-design.md)
 - `static/downloads/`：可下载资料
 
 ## GitHub Pages

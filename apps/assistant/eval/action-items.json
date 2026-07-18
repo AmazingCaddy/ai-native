@@ -1,0 +1,52 @@
+[
+  {
+    "meeting": "2026-07-15-atlas-sync.md",
+    "items": [
+      {
+        "task": "完成 CSV 字段映射设计",
+        "owner": "陈宇",
+        "dueDate": "2026-07-20"
+      },
+      {
+        "task": "准备 10 份匿名任务样例",
+        "owner": "周敏",
+        "dueDate": "2026-07-21"
+      }
+    ]
+  },
+  {
+    "meeting": "2026-07-16-incident-review.md",
+    "items": [
+      {
+        "task": "为配置变更增加校验测试",
+        "owner": "赵海",
+        "dueDate": "2026-07-19"
+      },
+      {
+        "task": "补充回滚演练文档",
+        "owner": "孙悦",
+        "dueDate": "2026-07-22"
+      },
+      {
+        "task": "在下周值班交接时演示新的检查流程",
+        "owner": null,
+        "dueDate": null
+      }
+    ]
+  },
+  {
+    "meeting": "2026-07-17-onboarding-retro.md",
+    "items": [
+      {
+        "task": "更新入职指南中的权限章节",
+        "owner": "王宁",
+        "dueDate": "2026-07-23"
+      },
+      {
+        "task": "整理导师名单",
+        "owner": null,
+        "dueDate": null
+      }
+    ]
+  }
+]
