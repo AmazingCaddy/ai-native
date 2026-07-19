@@ -8,6 +8,10 @@ import {
   buildActionExtractionInput,
 } from "../src/actions/prompt.js";
 import {
+  ACTION_PROMPT_VARIANTS,
+  parseRawJsonOutput,
+} from "../src/actions/prompt-variants.js";
+import {
   actionSchema,
   extractActionsResponseSchema,
   type ExtractedAction,
@@ -86,6 +90,26 @@ test("prompt builder separates stable instructions from dynamic context", () => 
     output_language: "zh-CN",
     meeting_content: "李雷：我下周五前补完测试。",
   });
+});
+
+test("Prompt comparison variants progressively add boundaries, examples, and strict schema", () => {
+  assert.deepEqual(
+    ACTION_PROMPT_VARIANTS.map((variant) => variant.id),
+    ["v1-basic", "v2-boundaries", "v3-few-shot", "v4-structured"],
+  );
+  assert.deepEqual(
+    ACTION_PROMPT_VARIANTS.map((variant) => variant.strictSchema),
+    [false, false, false, true],
+  );
+  assert.doesNotMatch(ACTION_PROMPT_VARIANTS[0].instructions, /保持既有目标/);
+  assert.match(ACTION_PROMPT_VARIANTS[1].instructions, /保持既有目标/);
+  assert.match(ACTION_PROMPT_VARIANTS[2].instructions, /示例 3/);
+  assert.equal(ACTION_PROMPT_VARIANTS[3].instructions, ACTION_EXTRACTION_INSTRUCTIONS);
+});
+
+test("raw Prompt variants require directly parseable JSON", () => {
+  assert.deepEqual(parseRawJsonOutput('{"actions":[]}'), { actions: [] });
+  assert.throws(() => parseRawJsonOutput('```json\n{"actions":[]}\n```'));
 });
 
 test("evidence validator rejects quotes that are not in the meeting", () => {

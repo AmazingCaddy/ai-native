@@ -75,6 +75,18 @@ npm run assistant:eval:actions -- --execute
 npm run assistant:eval:actions:regrade -- eval/action-extraction/results/<run>.json
 ```
 
+Day 2 四版本 Prompt 对照默认只做 dry run：
+
+```bash
+npm run assistant:experiment:prompt-comparison
+```
+
+显式执行会评估 4 个 Prompt 版本 × 10 个 Case；其中空输入由应用直接拦截，预计产生 36 次 Floway 模型调用：
+
+```bash
+npm run assistant:experiment:prompt-comparison -- --execute
+```
+
 ## Day 1 模型能力对比实验
 
 模型列表由 `MODEL_COMPARISON_MODELS` 控制，使用逗号分隔：

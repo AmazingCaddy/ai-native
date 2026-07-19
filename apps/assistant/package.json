@@ -8,6 +8,7 @@
     "build": "tsc -p tsconfig.json",
     "eval:actions": "tsx src/actions/eval-cli.ts",
     "eval:actions:regrade": "tsx src/actions/eval-regrade-cli.ts",
+    "experiment:prompt-comparison": "tsx src/actions/prompt-comparison-cli.ts",
     "experiment:model-comparison": "tsx src/experiments/model-comparison-cli.ts",
     "start": "node dist/src/server.js",
     "test": "tsx --test test/**/*.test.ts",

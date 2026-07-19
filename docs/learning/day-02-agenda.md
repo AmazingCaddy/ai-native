@@ -8,10 +8,10 @@ title: Day 2 问题清单
 
 ## 当前主线
 
-- 当前阶段：Day 2 实践与验收
-- 当前任务：`D02-P04`
-- 状态：待追问
-- 下一步：在本地 `.env` 配置 Floway endpoint、Key 和模型 ID，再显式运行真实评测
+- 当前阶段：Day 2 已完成
+- 当前任务：无
+- 状态：已关闭
+- 下一次进入：Day 3 AI 编程工作流
 
 ## 问题列表
 
@@ -35,7 +35,9 @@ title: Day 2 问题清单
 | D02-P01 | 定义 Zod 运行时 Schema 与字段不变量 | 已完成 | [学习记录](./day-02-notes.md#d02-p01设计-zod-schema) |
 | D02-P02 | 实现 Prompt、OpenAI Model Adapter 与证据校验 | 已完成 | [学习记录](./day-02-notes.md#d02-p02promptadapter-与证据校验实现) |
 | D02-P03 | 实现 `POST /actions/extract`、稳定错误与调用元数据 | 已完成 | [学习记录](./day-02-notes.md#d02-p03路由稳定错误与-trace-实现) |
-| D02-P04 | 建立 10 条评测集，运行测试并完成验收 | 待追问 | [学习记录](./day-02-notes.md#d02-p04评测集与最终验收) |
+| D02-P04 | 建立 10 条评测集，运行测试并完成验收 | 已完成 | [学习记录](./day-02-notes.md#d02-p04评测集与最终验收) |
+
+补充材料：[技术地图](./day-02-technology-map.md) · [每日复盘](./day-02-retro.md) · [真实评测报告](./day-02-eval-report.md) · [四版本 Prompt 对照](./day-02-prompt-comparison-report.md)
 
 ## 验收状态
 
@@ -47,7 +49,8 @@ title: Day 2 问题清单
 - [x] 支持通过本地 `.env` 配置 Floway OpenAI-compatible endpoint、Key 和模型 ID
 - [x] 通过 Floway 使用真实模型运行 10 条 Case，Schema 与证据通过率为 100%
 - [x] 保存原始模型结果、失败诊断与独立重评分报告
-- [ ] 完成四个 Prompt 版本的真实对照实验
+- [x] 四个 Prompt 版本对照 CLI 与 dry run 完成（40 次评估，预计 36 次模型调用）
+- [x] 完成四个 Prompt 版本的真实对照实验
 
 ## 回溯规则
 

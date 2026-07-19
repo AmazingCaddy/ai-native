@@ -14,6 +14,7 @@
     "assistant:build": "npm run build --workspace @ai-native/assistant",
     "assistant:eval:actions": "npm run eval:actions --workspace @ai-native/assistant --",
     "assistant:eval:actions:regrade": "npm run eval:actions:regrade --workspace @ai-native/assistant --",
+    "assistant:experiment:prompt-comparison": "npm run experiment:prompt-comparison --workspace @ai-native/assistant --",
     "assistant:experiment:model-comparison": "npm run experiment:model-comparison --workspace @ai-native/assistant --",
     "assistant:start": "npm run start --workspace @ai-native/assistant",
     "assistant:test": "npm run test --workspace @ai-native/assistant",
