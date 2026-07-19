@@ -372,6 +372,24 @@ Embedding 负责粗召回，Reranker 负责精排序，RAG 把检索结果送入
 
 这意味着代码没有硬编码 Floway 地址或凭据，安全性和可移植性更好；同时也意味着实验结果依赖运行机器的 Codex 配置。报告必须记录实际 Provider，运行器后续应在执行前增加非敏感配置检查，避免误用其他 Provider。
 
+### 2026-07-19 修订：增加 Floway Responses API 直连轨道
+
+用户确认 Floway 提供 OpenAI-compatible endpoint 和 Key 后，模型对比实验新增 `FlowayResponsesAdapter`。直连轨道复用本地 `.env` 中的 `FLOWAY_BASE_URL` 与 `FLOWAY_API_KEY`，不经过 Codex Agent 外壳。
+
+模型集合使用 Provider 无关的 `MODEL_COMPARISON_MODELS`，按逗号分割、清理空白、拒绝重复并要求至少两个模型。`--models=...` 优先于环境变量，配置几个模型就比较几个；总调用数为任务数 × 模型数 × 重复次数。
+
+当 Floway 连接完整时默认选择直连轨道；`--adapter=codex-cli` 可显式复现旧基线。旧结果与直连结果分别标记 `floway-via-codex-cli` 和 `floway-direct`，不得合并成同一实验结论。
+
+### 2026-07-19 二次修订：移除 Codex CLI 执行路径
+
+用户决定模型对比只保留 Floway Responses API 直连。代码中的 Codex CLI Adapter、`--adapter` 选项和 `CODEX_BIN` 配置已删除；Day 1 已产生的 Codex Agent 外壳结果继续作为历史记录保留，不覆盖、不重写，也不与新的直连结果合并。
+
+### 2026-07-19 Floway 直连三模型实测
+
+使用 `gpt-5.6-terra`、`gpt-5-mini` 和 `claude-sonnet-4-5` 完成 4 类任务 × 2 次重复，共 24 次真实调用，24/24 成功。`gpt-5.6-terra` 平均延迟 3,284 ms，低于 Claude 的 7,014 ms 和 Mini 的 10,294 ms；平均输出 Token 分别为 201、319 和 854。
+
+三个模型在事实问答上均通过；三个模型的代码解释都超过 300 字。行动项提取中 Terra 一次误提、一次准确，Mini 和 Claude 两次都误提既有目标；Claude 两次都添加 Markdown JSON 围栏。完整分析见 [Floway 直连三模型对比报告](./day-01-floway-direct-comparison-report.md)。
+
 ### 评测追问：小型文档和简单任务能否区分强模型？
 
 #### 原始问题

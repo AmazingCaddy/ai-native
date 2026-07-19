@@ -322,6 +322,12 @@ flowchart LR
 
 2026-07-18，在相同 Codex Agent 外壳和 Floway Provider 下，对 `gpt-5.6-sol` 与 `claude-opus-4-7` 执行四类任务、每类两次，共 16 次调用，全部成功。
 
+2026-07-19，项目增加 Floway OpenAI-compatible Responses API 直连 Adapter。模型对比列表由 `MODEL_COMPARISON_MODELS` 或 `--models=...` 控制，至少两个且不得重复；报告必须区分 `floway-direct` 与 `floway-via-codex-cli`。旧 Codex Agent 外壳结果继续保留，不能与新的裸 API 轨道直接合并。
+
+同日后续修订：当前模型对比代码只保留 `floway-direct`，Codex CLI Adapter 和 `--adapter` 选项已移除。既有 `floway-via-codex-cli` 结果仍属于不可覆盖的历史实验记录。
+
+2026-07-19 直连实测：`gpt-5.6-terra`、`gpt-5-mini`、`claude-sonnet-4-5` 在 4 类任务、2 次重复下共 24/24 调用成功。平均延迟分别为 3,284、10,294、7,014 ms；平均输出 Token 分别为 201、854、319。三者事实问答均正确，三者代码解释均超过 300 字；Terra 的行动项提取一次准确一次误提，Mini 与 Claude 两次均误提，且 Claude 两次添加 JSON 代码围栏。该小样本仅用于当前项目候选选择与失败模式发现。
+
 | 模型 | 满足全部显式标准 | 平均延迟 | 平均输出 Token | 主要观察 |
 | --- | ---: | ---: | ---: | --- |
 | `gpt-5.6-sol` | 8/8 | 9435 ms | 123 | 输出简洁，裸 JSON 和字数限制均稳定遵守 |

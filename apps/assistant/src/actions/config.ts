@@ -4,13 +4,18 @@ import { OpenAIActionAdapter } from "./openai-adapter.js";
 import { ActionExtractionService, type ActionExecutionService } from "./service.js";
 import { InMemoryActionTraceStore } from "./trace.js";
 
-type ActionEnvironment = {
+export type ProviderEnvironment = {
   FLOWAY_API_KEY?: string;
   FLOWAY_BASE_URL?: string;
   FLOWAY_MODEL?: string;
   OPENAI_API_KEY?: string;
   OPENAI_BASE_URL?: string;
   OPENAI_MODEL?: string;
+};
+
+export type FlowayConnectionConfiguration = {
+  apiKey: string;
+  baseURL: string;
 };
 
 export type ActionProviderConfiguration = {
@@ -25,8 +30,17 @@ function clean(value: string | undefined): string | undefined {
   return cleaned ? cleaned : undefined;
 }
 
+export function resolveFlowayConnection(
+  environment: ProviderEnvironment,
+): FlowayConnectionConfiguration | undefined {
+  const apiKey = clean(environment.FLOWAY_API_KEY);
+  const baseURL = clean(environment.FLOWAY_BASE_URL);
+  if (!apiKey || !baseURL) return undefined;
+  return { apiKey, baseURL };
+}
+
 export function resolveActionProviderConfiguration(
-  environment: ActionEnvironment,
+  environment: ProviderEnvironment,
 ): ActionProviderConfiguration | undefined {
   const floway = {
     apiKey: clean(environment.FLOWAY_API_KEY),
@@ -57,7 +71,7 @@ export function resolveActionProviderConfiguration(
 }
 
 export function createActionServiceFromEnvironment(
-  environment: ActionEnvironment,
+  environment: ProviderEnvironment,
 ): ActionExecutionService | undefined {
   const configuration = resolveActionProviderConfiguration(environment);
   if (!configuration) return undefined;

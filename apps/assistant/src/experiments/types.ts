@@ -20,9 +20,12 @@ export type GenerationRequest = {
 export type GenerationResponse = {
   output: string;
   usage?: TokenUsage;
+  providerRequestId?: string;
+  actualModel?: string;
 };
 
 export interface ModelAdapter {
+  readonly provider: string;
   generate(request: GenerationRequest): Promise<GenerationResponse>;
 }
 
@@ -31,7 +34,10 @@ export type ModelRunRecord = {
   taskId: string;
   taskTitle: string;
   criteria: string[];
+  provider: string;
+  providerRequestId?: string;
   model: string;
+  actualModel?: string;
   repetition: number;
   startedAt: string;
   elapsedMs: number;
