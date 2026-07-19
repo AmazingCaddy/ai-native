@@ -1,0 +1,93 @@
+{
+  "version": "actions-eval-v1",
+  "runId": "2026-07-19T11-29-39-879Z",
+  "summary": {
+    "totalCases": 1,
+    "passedCases": 1,
+    "casePassRate": 1,
+    "schemaPassRate": 1,
+    "evidencePassRate": 1,
+    "precision": 1,
+    "recall": 1,
+    "ownerAccuracy": 1,
+    "dueDateAccuracy": 1,
+    "confirmationAccuracy": 1,
+    "hallucinatedOwners": 0,
+    "hallucinatedDueDates": 0
+  },
+  "records": [
+    {
+      "id": "E09-ambiguous-same-name",
+      "input": {
+        "meeting_content": "团队里有两位王宁。会议只说王宁要在 7 月 23 日前更新权限章节，但没有说明是哪一位。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "更新",
+              "权限章节"
+            ],
+            "owner": null,
+            "due_date": "2026-07-23",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E09-ambiguous-same-name",
+        "actions": [
+          {
+            "title": "更新权限章节",
+            "owner": null,
+            "due_date": "2026-07-23",
+            "action_evidence": "王宁要在 7 月 23 日前更新权限章节",
+            "owner_evidence": null,
+            "due_date_evidence": "7 月 23 日前",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_hb8UIg_WhE5YVPRdmo8QpC_R-feyA",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 1861,
+          "input_tokens": 761,
+          "output_tokens": 92
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E09-ambiguous-same-name",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    }
+  ]
+}

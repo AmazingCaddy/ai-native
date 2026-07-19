@@ -1,0 +1,67 @@
+{
+  "version": "actions-eval-v1",
+  "runId": "2026-07-19T11-26-10-938Z",
+  "summary": {
+    "totalCases": 1,
+    "passedCases": 0,
+    "casePassRate": 0,
+    "schemaPassRate": 0,
+    "evidencePassRate": 0,
+    "precision": 1,
+    "recall": 0,
+    "ownerAccuracy": 0,
+    "dueDateAccuracy": 0,
+    "confirmationAccuracy": 0,
+    "hallucinatedOwners": 0,
+    "hallucinatedDueDates": 0
+  },
+  "records": [
+    {
+      "id": "E09-ambiguous-same-name",
+      "input": {
+        "meeting_content": "团队里有两位王宁。会议只说王宁要在 7 月 23 日前更新权限章节，但没有说明是哪一位。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "更新",
+              "权限章节"
+            ],
+            "owner": null,
+            "due_date": "2026-07-23",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": null,
+      "errorCode": "MODEL_OUTPUT_SCHEMA_FAILED",
+      "score": {
+        "id": "E09-ambiguous-same-name",
+        "passed": false,
+        "schemaValid": false,
+        "evidenceValid": false,
+        "expectedError": null,
+        "actualError": "MODEL_OUTPUT_SCHEMA_FAILED",
+        "expectedActions": 1,
+        "predictedActions": 0,
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 1,
+        "ownerCorrect": 0,
+        "dueDateCorrect": 0,
+        "confirmationCorrect": 0,
+        "matchedActions": 0,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    }
+  ]
+}

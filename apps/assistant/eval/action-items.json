@@ -1,52 +1,244 @@
-[
-  {
-    "meeting": "2026-07-15-atlas-sync.md",
-    "items": [
-      {
-        "task": "完成 CSV 字段映射设计",
-        "owner": "陈宇",
-        "dueDate": "2026-07-20"
+{
+  "version": "actions-eval-v1",
+  "cases": [
+    {
+      "id": "E01-single-complete",
+      "category": "happy-path",
+      "input": {
+        "meeting_content": "陈宇将在 7 月 20 日前完成 CSV 字段映射设计。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
       },
-      {
-        "task": "准备 10 份匿名任务样例",
-        "owner": "周敏",
-        "dueDate": "2026-07-21"
-      }
-    ]
-  },
-  {
-    "meeting": "2026-07-16-incident-review.md",
-    "items": [
-      {
-        "task": "为配置变更增加校验测试",
-        "owner": "赵海",
-        "dueDate": "2026-07-19"
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["CSV", "字段映射"],
+            "owner": "陈宇",
+            "due_date": "2026-07-20",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
       },
-      {
-        "task": "补充回滚演练文档",
-        "owner": "孙悦",
-        "dueDate": "2026-07-22"
+      "tags": ["normal", "complete-fields"]
+    },
+    {
+      "id": "E02-multiple-actions",
+      "category": "happy-path",
+      "input": {
+        "meeting_content": "周敏负责准备 10 份匿名任务样例，截止 7 月 21 日。赵海将在 7 月 19 日前为配置变更增加校验测试。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
       },
-      {
-        "task": "在下周值班交接时演示新的检查流程",
-        "owner": null,
-        "dueDate": null
-      }
-    ]
-  },
-  {
-    "meeting": "2026-07-17-onboarding-retro.md",
-    "items": [
-      {
-        "task": "更新入职指南中的权限章节",
-        "owner": "王宁",
-        "dueDate": "2026-07-23"
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["匿名", "任务样例"],
+            "owner": "周敏",
+            "due_date": "2026-07-21",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          },
+          {
+            "title_keywords": ["配置变更", "校验测试"],
+            "owner": "赵海",
+            "due_date": "2026-07-19",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
       },
-      {
-        "task": "整理导师名单",
-        "owner": null,
-        "dueDate": null
-      }
-    ]
-  }
-]
+      "tags": ["normal", "multiple-actions"]
+    },
+    {
+      "id": "E03-empty-input",
+      "category": "input-error",
+      "input": {
+        "meeting_content": "   ",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [],
+        "error_code": "EMPTY_INPUT"
+      },
+      "tags": ["empty", "validation"]
+    },
+    {
+      "id": "E04-no-new-action",
+      "category": "negative",
+      "input": {
+        "meeting_content": "林岚确认批量导入功能仍以 8 月 15 日上线为目标。本次不需要创建新任务。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [],
+        "error_code": null
+      },
+      "tags": ["no-action", "false-positive"]
+    },
+    {
+      "id": "E05-missing-owner-and-date",
+      "category": "missing-fields",
+      "input": {
+        "meeting_content": "新的检查流程需要在值班交接时演示，但会议没有指定演示负责人和日期。",
+        "current_date": "2026-07-16",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["演示", "检查流程"],
+            "owner": null,
+            "due_date": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "missing_owner_and_due_date",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["missing-owner", "missing-date", "no-hallucination"]
+    },
+    {
+      "id": "E06-relative-date",
+      "category": "date-normalization",
+      "input": {
+        "meeting_content": "李雷：我下周五前补完支付模块集成测试。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["支付模块", "集成测试"],
+            "owner": "李雷",
+            "due_date": "2026-07-24",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["relative-date", "timezone"]
+    },
+    {
+      "id": "E07-conflicting-owner",
+      "category": "conflict",
+      "input": {
+        "meeting_content": "李雷说赵敏负责补测试。韩梅梅随后说负责人应该是陈晨。会议没有确认最终负责人。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["补测试"],
+            "owner": null,
+            "due_date": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "conflicting_owner",
+            "owner_candidates": ["赵敏", "陈晨"],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["owner-conflict", "confirmation"]
+    },
+    {
+      "id": "E08-explicit-correction",
+      "category": "correction",
+      "input": {
+        "meeting_content": "原计划由赵敏在 7 月 21 日前补测试。不对，最终改由陈晨在 7 月 22 日前完成。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["测试"],
+            "owner": "陈晨",
+            "due_date": "2026-07-22",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["correction", "final-decision"]
+    },
+    {
+      "id": "E09-ambiguous-same-name",
+      "category": "ambiguity",
+      "input": {
+        "meeting_content": "团队里有两位王宁。会议只说王宁要在 7 月 23 日前更新权限章节，但没有说明是哪一位。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["更新", "权限章节"],
+            "owner": null,
+            "due_date": "2026-07-23",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["same-name", "ambiguity", "confirmation"]
+    },
+    {
+      "id": "E10-long-noisy-meeting",
+      "category": "long-context",
+      "input": {
+        "meeting_content": "会议先回顾了上季度数据、办公室搬迁和团建安排。团队讨论了多个已经关闭的问题，也确认发布节奏保持不变。孙悦负责在 7 月 22 日前补充回滚演练文档。之后大家继续讨论午餐和下次会议时间，没有新增任务。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": ["回滚", "演练文档"],
+            "owner": "孙悦",
+            "due_date": "2026-07-22",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "tags": ["long-context", "noise", "false-positive"]
+    }
+  ]
+}

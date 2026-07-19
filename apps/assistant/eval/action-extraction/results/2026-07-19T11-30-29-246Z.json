@@ -1,0 +1,719 @@
+{
+  "version": "actions-eval-v1",
+  "runId": "2026-07-19T11-30-29-246Z",
+  "summary": {
+    "totalCases": 10,
+    "passedCases": 9,
+    "casePassRate": 0.9,
+    "schemaPassRate": 1,
+    "evidencePassRate": 1,
+    "precision": 0.8888888888888888,
+    "recall": 0.8888888888888888,
+    "ownerAccuracy": 0.8888888888888888,
+    "dueDateAccuracy": 0.8888888888888888,
+    "confirmationAccuracy": 0.8888888888888888,
+    "hallucinatedOwners": 0,
+    "hallucinatedDueDates": 0
+  },
+  "records": [
+    {
+      "id": "E01-single-complete",
+      "input": {
+        "meeting_content": "陈宇将在 7 月 20 日前完成 CSV 字段映射设计。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "CSV",
+              "字段映射"
+            ],
+            "owner": "陈宇",
+            "due_date": "2026-07-20",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E01-single-complete",
+        "actions": [
+          {
+            "title": "完成 CSV 字段映射设计",
+            "owner": "陈宇",
+            "due_date": "2026-07-20",
+            "action_evidence": "陈宇将在 7 月 20 日前完成 CSV 字段映射设计。",
+            "owner_evidence": "陈宇",
+            "due_date_evidence": "7 月 20 日前",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_VOu_cQ_RewQwzJv40zFSfGd5TGLnA",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 1988,
+          "input_tokens": 747,
+          "output_tokens": 100
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E01-single-complete",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E02-multiple-actions",
+      "input": {
+        "meeting_content": "周敏负责准备 10 份匿名任务样例，截止 7 月 21 日。赵海将在 7 月 19 日前为配置变更增加校验测试。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "匿名",
+              "任务样例"
+            ],
+            "owner": "周敏",
+            "due_date": "2026-07-21",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          },
+          {
+            "title_keywords": [
+              "配置变更",
+              "校验测试"
+            ],
+            "owner": "赵海",
+            "due_date": "2026-07-19",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E02-multiple-actions",
+        "actions": [
+          {
+            "title": "准备 10 份匿名任务样例",
+            "owner": "周敏",
+            "due_date": "2026-07-21",
+            "action_evidence": "周敏负责准备 10 份匿名任务样例，截止 7 月 21 日。",
+            "owner_evidence": "周敏",
+            "due_date_evidence": "截止 7 月 21 日",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          },
+          {
+            "title": "为配置变更增加校验测试",
+            "owner": "赵海",
+            "due_date": "2026-07-19",
+            "action_evidence": "赵海将在 7 月 19 日前为配置变更增加校验测试。",
+            "owner_evidence": "赵海",
+            "due_date_evidence": "7 月 19 日前",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_pbXEnQ_dN73KT9i2C2ZXS1cLw2b1A",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 2290,
+          "input_tokens": 769,
+          "output_tokens": 194
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E02-multiple-actions",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 2,
+        "predictedActions": 2,
+        "truePositives": 2,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 2,
+        "dueDateCorrect": 2,
+        "confirmationCorrect": 2,
+        "matchedActions": 2,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E03-empty-input",
+      "input": {
+        "meeting_content": "   ",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [],
+        "error_code": "EMPTY_INPUT"
+      },
+      "response": null,
+      "errorCode": "EMPTY_INPUT",
+      "score": {
+        "id": "E03-empty-input",
+        "passed": true,
+        "schemaValid": null,
+        "evidenceValid": null,
+        "expectedError": "EMPTY_INPUT",
+        "actualError": "EMPTY_INPUT",
+        "expectedActions": 0,
+        "predictedActions": 0,
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 0,
+        "dueDateCorrect": 0,
+        "confirmationCorrect": 0,
+        "matchedActions": 0,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E04-no-new-action",
+      "input": {
+        "meeting_content": "林岚确认批量导入功能仍以 8 月 15 日上线为目标。本次不需要创建新任务。",
+        "current_date": "2026-07-15",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E04-no-new-action",
+        "actions": [],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_aK6QNg_tQJ-H5XiLKY_uu6nGzxMAQ",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 1586,
+          "input_tokens": 757,
+          "output_tokens": 13
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E04-no-new-action",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 0,
+        "predictedActions": 0,
+        "truePositives": 0,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 0,
+        "dueDateCorrect": 0,
+        "confirmationCorrect": 0,
+        "matchedActions": 0,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E05-missing-owner-and-date",
+      "input": {
+        "meeting_content": "新的检查流程需要在值班交接时演示，但会议没有指定演示负责人和日期。",
+        "current_date": "2026-07-16",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "演示",
+              "检查流程"
+            ],
+            "owner": null,
+            "due_date": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "missing_owner_and_due_date",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E05-missing-owner-and-date",
+        "actions": [
+          {
+            "title": "在值班交接时演示新的检查流程",
+            "owner": null,
+            "due_date": null,
+            "action_evidence": "新的检查流程需要在值班交接时演示",
+            "owner_evidence": null,
+            "due_date_evidence": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "missing_owner_and_due_date",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_JlD3UQ_P3FhJtKKMMEEUdckF1ViIA",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 2045,
+          "input_tokens": 751,
+          "output_tokens": 90
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E05-missing-owner-and-date",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E06-relative-date",
+      "input": {
+        "meeting_content": "李雷：我下周五前补完支付模块集成测试。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "支付模块",
+              "集成测试"
+            ],
+            "owner": "李雷",
+            "due_date": "2026-07-24",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E06-relative-date",
+        "actions": [
+          {
+            "title": "补完支付模块集成测试",
+            "owner": "李雷",
+            "due_date": "2026-07-24",
+            "action_evidence": "李雷：我下周五前补完支付模块集成测试。",
+            "owner_evidence": "李雷",
+            "due_date_evidence": "下周五前",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_o5W8Pw_LArSB5VlzI2S6BX6ALMrfw",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 3789,
+          "input_tokens": 745,
+          "output_tokens": 96
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E06-relative-date",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E07-conflicting-owner",
+      "input": {
+        "meeting_content": "李雷说赵敏负责补测试。韩梅梅随后说负责人应该是陈晨。会议没有确认最终负责人。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "补测试"
+            ],
+            "owner": null,
+            "due_date": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "conflicting_owner",
+            "owner_candidates": [
+              "赵敏",
+              "陈晨"
+            ],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E07-conflicting-owner",
+        "actions": [
+          {
+            "title": "补测试",
+            "owner": null,
+            "due_date": null,
+            "action_evidence": "赵敏负责补测试。",
+            "owner_evidence": null,
+            "due_date_evidence": null,
+            "needs_confirmation": true,
+            "confirmation_reason": "conflicting_owner",
+            "owner_candidates": [
+              {
+                "value": "赵敏",
+                "evidence": "赵敏负责补测试。"
+              },
+              {
+                "value": "陈晨",
+                "evidence": "负责人应该是陈晨。"
+              }
+            ],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_y8MLcg_2PSaiwD7ubrCcHNpty6HHQ",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 2676,
+          "input_tokens": 755,
+          "output_tokens": 181
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E07-conflicting-owner",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E08-explicit-correction",
+      "input": {
+        "meeting_content": "原计划由赵敏在 7 月 21 日前补测试。不对，最终改由陈晨在 7 月 22 日前完成。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "补测试"
+            ],
+            "owner": "陈晨",
+            "due_date": "2026-07-22",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E08-explicit-correction",
+        "actions": [
+          {
+            "title": "完成测试",
+            "owner": "陈晨",
+            "due_date": "2026-07-22",
+            "action_evidence": "最终改由陈晨在 7 月 22 日前完成。",
+            "owner_evidence": "陈晨",
+            "due_date_evidence": "7 月 22 日前",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_i8YGNQ_vlcnJBVRij14vOq3vlrerQ",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 4130,
+          "input_tokens": 762,
+          "output_tokens": 294
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E08-explicit-correction",
+        "passed": false,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 0,
+        "falsePositives": 1,
+        "falseNegatives": 1,
+        "ownerCorrect": 0,
+        "dueDateCorrect": 0,
+        "confirmationCorrect": 0,
+        "matchedActions": 0,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E09-ambiguous-same-name",
+      "input": {
+        "meeting_content": "团队里有两位王宁。会议只说王宁要在 7 月 23 日前更新权限章节，但没有说明是哪一位。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "更新",
+              "权限章节"
+            ],
+            "owner": null,
+            "due_date": "2026-07-23",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E09-ambiguous-same-name",
+        "actions": [
+          {
+            "title": "更新权限章节",
+            "owner": null,
+            "due_date": "2026-07-23",
+            "action_evidence": "王宁要在 7 月 23 日前更新权限章节",
+            "owner_evidence": null,
+            "due_date_evidence": "7 月 23 日前",
+            "needs_confirmation": true,
+            "confirmation_reason": "ambiguous_owner",
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_L-YNbw_ZO-WnChlcGeq_CSGlKUdig",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 2166,
+          "input_tokens": 761,
+          "output_tokens": 92
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E09-ambiguous-same-name",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    },
+    {
+      "id": "E10-long-noisy-meeting",
+      "input": {
+        "meeting_content": "会议先回顾了上季度数据、办公室搬迁和团建安排。团队讨论了多个已经关闭的问题，也确认发布节奏保持不变。孙悦负责在 7 月 22 日前补充回滚演练文档。之后大家继续讨论午餐和下次会议时间，没有新增任务。",
+        "current_date": "2026-07-19",
+        "timezone": "Asia/Shanghai",
+        "output_language": "zh-CN"
+      },
+      "expected": {
+        "actions": [
+          {
+            "title_keywords": [
+              "回滚",
+              "演练文档"
+            ],
+            "owner": "孙悦",
+            "due_date": "2026-07-22",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "error_code": null
+      },
+      "response": {
+        "request_id": "E10-long-noisy-meeting",
+        "actions": [
+          {
+            "title": "补充回滚演练文档",
+            "owner": "孙悦",
+            "due_date": "2026-07-22",
+            "action_evidence": "孙悦负责在 7 月 22 日前补充回滚演练文档。",
+            "owner_evidence": "孙悦",
+            "due_date_evidence": "7 月 22 日前",
+            "needs_confirmation": false,
+            "confirmation_reason": null,
+            "owner_candidates": [],
+            "due_date_candidates": []
+          }
+        ],
+        "meta": {
+          "provider": "floway",
+          "provider_request_id": "resp_97mc2Q_X_JxFHBoSubWvyvCdQ0l2w",
+          "model": "gpt-5.6-terra",
+          "prompt_version": "actions-v1",
+          "schema_version": "actions-v1",
+          "latency_ms": 1941,
+          "input_tokens": 797,
+          "output_tokens": 103
+        }
+      },
+      "errorCode": null,
+      "score": {
+        "id": "E10-long-noisy-meeting",
+        "passed": true,
+        "schemaValid": true,
+        "evidenceValid": true,
+        "expectedError": null,
+        "actualError": null,
+        "expectedActions": 1,
+        "predictedActions": 1,
+        "truePositives": 1,
+        "falsePositives": 0,
+        "falseNegatives": 0,
+        "ownerCorrect": 1,
+        "dueDateCorrect": 1,
+        "confirmationCorrect": 1,
+        "matchedActions": 1,
+        "hallucinatedOwners": 0,
+        "hallucinatedDueDates": 0
+      }
+    }
+  ]
+}

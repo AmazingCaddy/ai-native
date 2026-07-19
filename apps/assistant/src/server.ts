@@ -1,4 +1,8 @@
 import { buildApp } from './app.js';
+import { createActionServiceFromEnvironment } from './actions/config.js';
+import { loadLocalEnvironment } from './environment.js';
+
+loadLocalEnvironment();
 
 const DEFAULT_PORT = 3001;
 const host = process.env.HOST ?? '127.0.0.1';
@@ -9,7 +13,8 @@ if (!Number.isInteger(port) || port < 1 || port > 65_535 || String(port) !== raw
   throw new Error(`PORT must be an integer between 1 and 65535; received "${rawPort}"`);
 }
 
-const app = buildApp();
+const actionService = createActionServiceFromEnvironment(process.env);
+const app = buildApp({ actionService });
 
 try {
   await app.listen({ host, port });
