@@ -28,7 +28,7 @@ title: 14 天路线图
 | ---: | --- | --- |
 | 1 | [AI 技术全景](./course/day-01-landscape.md) | 第一版技术地图与项目骨架 |
 | 2 | [Prompt、Context 与结构化输出](./course/day-02-prompt-context.md) | 可评测的信息提取器 |
-| 3 | [AI 编程工作流](./course/day-03-ai-coding.md) | 可复用开发与 Review 流程 |
+| 3 | [AI 编程工作流](./course/day-03-ai-coding.md) | 可复用开发、Review 流程与仓库 Skill |
 | 4 | [模型 API 工程](./course/day-04-model-api.md) | 可靠的模型调用层 |
 | 5 | [Tool Calling 与 MCP](./course/day-05-tools-mcp.md) | 受控的读写工具调用 |
 | 6 | [Embedding、搜索与 RAG](./course/day-06-rag.md) | 带引用的知识问答 |
@@ -46,6 +46,7 @@ title: 14 天路线图
 - 一张覆盖至少 25 个概念的 AI 技术地图
 - 一份包含至少 12 种技术或模式的判断矩阵
 - 三个已经投入使用的个人或团队 AI 工作流
+- 一个经过真实任务验证的仓库或团队 Skill
 - 一个独立开发并部署的 AI 应用
 - 至少 20 条自动评测用例
 - 一个由真实瓶颈支持的下一阶段深入方向
